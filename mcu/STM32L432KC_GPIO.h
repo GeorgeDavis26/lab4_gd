@@ -15,7 +15,7 @@
 #define GPIO_HIGH   1
 
 // Base addresses for GPIO ports
-#define GPIOB_BASE  (0x48000400UL)
+#define GPIOA_BASE  (0x48000000UL)
 
 // Arbitrary GPIO functions for pinMode()
 #define GPIO_INPUT  0
@@ -39,23 +39,19 @@ typedef struct {
     volatile uint32_t LCKR;    // GPIO Offset 0x1C
     volatile uint32_t AFRL;    // GPIO Offset 0x20
     volatile uint32_t AFRH;    // GPIO Offset 0x24
-} GPIO;
+} GPIOA_TypeDef;
 
 // Pointers to GPIO-sized chunks of memory for each peripheral
-#define GPIOB ((GPIO *) GPIOB_BASE)
+#define GPIOA ((GPIOA_TypeDef *) GPIOA_BASE)
 
-#define GPIO GPIOB
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function prototypes
 ///////////////////////////////////////////////////////////////////////////////
 
 void pinMode(int pin, int function);
-
 int digitalRead(int pin);
-
 void digitalWrite(int pin, int val);
-
 void togglePin(int pin);
 
 #endif

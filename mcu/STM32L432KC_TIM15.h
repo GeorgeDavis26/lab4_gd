@@ -56,6 +56,6 @@ typedef struct {
 ///////////////////////////////////////////////////////////////////////////////
 
 
-void configurePWM(TIM15_TypeDef* TIMx);
+void configureTIM15(void);
 
 #endif

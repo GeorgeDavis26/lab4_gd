@@ -55,7 +55,5 @@ typedef struct {
 // Function prototypes
 ///////////////////////////////////////////////////////////////////////////////
 
-void configureUPCNT(TIM16_TypeDef* TIMx);
-
-
+void configureTIM16(void);
 #endif

@@ -27,8 +27,9 @@ typedef struct {
     __IO uint32_t DIER;      // TIM6 DMA/interrupt enable register        OFFSET: 0x0C
     __IO uint32_t SR;        // TIM6 status register                      OFFSET: 0x10
     __IO uint32_t EGR;       // TIM6 event generation register            OFFSET: 0x14
-         uint32_t RESERVED2; //                                           OFFSET: 0x1C
-         uint32_t RESERVED3; //                                           OFFSET: 0x20
+         uint32_t RESERVED2; //                                           OFFSET: 0x18
+         uint32_t RESERVED3; //                                           OFFSET: 0x1C
+         uint32_t RESERVED4; //                                           OFFSET: 0x20
     __IO uint32_t CNT;       // TIM6 counter                              OFFSET: 0x24
     __IO uint32_t PSC;       // TIM6 prescaler                            OFFSET: 0x28
     __IO uint32_t ARR;       // TIM6 auto-reload register                 OFFSET: 0x2C

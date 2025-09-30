@@ -15,7 +15,11 @@ Purpose : main C file for E155 lab 4
 
 #include "STM32L432KC_TIM16.h"
 
+
+#include <stdio.h>
+
 #include "STM32L432KC_GPIO.h"
+
 
 // The PLL is configured as the sysclk and input to TIM15/16
 //lab4_starter constaints a const int of pitches and durations
@@ -26,8 +30,8 @@ Purpose : main C file for E155 lab 4
 
 // Define macros for constants
 #define AUDIO_PIN           6 //PIN A6
-#define DURATION_PSC    700
-#define FREQUENCY_PSC    5
+#define DURATION_PSC    1400
+#define FREQUENCY_PSC    10
 
 
                               
@@ -35,26 +39,32 @@ void duration(int dur_DUR){
     // timer_f = clk_f / ((PSC + 1)(ARR + 1))
     //timer_f range 2 Hz - 32 Hz
     uint16_t freq_DUR= 1000/(dur_DUR);
-    uint16_t arr_DUR = (80000000 / ((DURATION_PSC+1)*(freq_DUR))) -1;
+    uint16_t psc = DURATION_PSC;
+
+    uint16_t arr_DUR = (80000000 / (freq_DUR * (1 + DURATION_PSC))) - 1;
 
     TIM6->ARR = arr_DUR; // Set auto reload register to duration of the note
-    TIM6->SR &= ~(1 << 0); //clear UIF
-    TIM6->CNT |= 0; // Set counter to 0 to begin the timer
     TIM6->EGR |= 1; //UG bit
+    TIM6->SR &= ~(1 << 0); //clear UIF
+
+
     TIM6->CR1 |= (1 << 0); //enable counter CEN bit
 }
 
 void frequency(int freq_FREQ) {
     // timer_f = clk_f / ((PSC + 1)(ARR + 1))
     //timer_f range 220 Hz - 1000 Hz
-    int16_t arr_FREQ = (80000000 / ((FREQUENCY_PSC+1)*(freq_FREQ))) -1;
+    int16_t arr_FREQ = (80000000 / (freq_FREQ * (1 + FREQUENCY_PSC))) - 1;
 
-    TIM16->ARR = arr_FREQ;
+    TIM16->ARR = arr_FREQ;  // sets ARR (freqency)
     TIM16->CCR1 = arr_FREQ/2;
+
+//    TIM16->RCR = 2;
+//    TIM16->CNT |= 0;  // Set counter to 0 to begin the timer
     TIM16->EGR |= (1 << 0); //UG bit
+    TIM6->SR &= ~(1 << 0); //clear UIF
     TIM16->CR1 |= (1 << 0); //enable counter CEN bit
-    TIM16->CNT |= 0;  // Set counter to 0 to begin the timer
-}
+    }
 
 const int superstition[][2] = {
 {415, 31}, //A flat 16th note
@@ -178,7 +188,7 @@ const int superstition[][2] = {
 };
 
 const int notes[][2] = {
-{659,	125},
+{659,	1000},
 {623,	125},
 {659,	125},
 {623,	125},
@@ -287,7 +297,7 @@ const int notes[][2] = {
 {494,	125},
 {440,	500},
 {  0,	0}};
-
+/*
 int main(void) {
     configureFlash(); // config flash
     configureClock(); // configure clock, timers and GPIO
@@ -298,8 +308,8 @@ int main(void) {
 
     GPIOA->AFRL |= (14 << 24); //GPIOA PA2 AFRL set to AF14
 
-    configureTIM16(); // SET TIMER 16PWM MODE AND PSC
-    configureTIM6();
+    configureTIM16(); // SET TIMER 16 PWM MODE AND PSC
+    configureTIM6(); //SET TIM 6 TO 
 
     pinMode(AUDIO_PIN, GPIO_ALT);
 
@@ -312,6 +322,37 @@ int main(void) {
         duration(dur);
         while((TIM6->SR >> 0 & 1) != 1);
         i = i + 1;
+    }
+}
+*/
+
+//DEBUGGING
+int main(void) {
+    configureFlash(); // config flash
+    configureClock(); // configure clock, timers and GPIO
+    
+    RCC->AHB2ENR |= (1 << 0);  // Turn on clock to GPIOA
+
+    RCC->APB1ENR1 |= (1 << 4); // SET TIM6 clk to sysclk PLL = 80MhZ
+
+    RCC->APB2ENR |= (1 << 17); // SET TIM16 clk to sysclk PLL = 80MhZ
+
+    GPIOA->AFRL |= (14 << 24); //GPIOA PA2 AFRL set to AF14
+
+    configureTIM16(); // SET TIMER 16 PWM MODE AND PSC
+    configureTIM6(); //SET TIM 6 TO 
+
+    uint16_t i = 0;
+
+    int freq = notes[i][0];
+
+    while(1){
+
+      frequency(freq);  
+    
+      while((TIM6->SR & 1) != 1);
+    
+      printf("boom!\n");
     }
 }
 

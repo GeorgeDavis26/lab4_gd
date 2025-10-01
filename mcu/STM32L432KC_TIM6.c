@@ -1,3 +1,7 @@
+
+//George Davis
+//9/30/25
+//gdavis@hmc.edu
 // STM32L432KC_UPCNT.c
 // Source code for UPCOUNT configuration 
 // TIM6 handles the duration of the

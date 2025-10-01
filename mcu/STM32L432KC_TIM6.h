@@ -1,4 +1,11 @@
-// STM32L432KC_TIM6.h
+
+/*
+AUTHOER : George Davis
+Date    : 9/25/2025
+File    : STM32L432KC_TIM16.h
+*/
+
+//Purpose
 // Header for TIM6 functions
 
 #ifndef STM32L4_TIM6_H

@@ -36,6 +36,7 @@ Purpose : main C file for E155 lab 4
 
                               
 void duration(int dur_DUR){
+    //This function reset the ARR value of the upcounting timer
     // timer_f = clk_f / ((PSC + 1)(ARR + 1))
     //timer_f range 2 Hz - 32 Hz
     uint16_t freq_DUR= 1000/(dur_DUR);
@@ -51,6 +52,7 @@ void duration(int dur_DUR){
 }
 
 void frequency(int freq_FREQ) {
+    //this function resets the ARR value of the PWM mode timer
     // timer_f = clk_f / ((PSC + 1)(ARR + 1))
     //timer_f range 220 Hz - 1000 Hz
     int16_t arr_FREQ = (80000000 / (freq_FREQ * (1 + FREQUENCY_PSC))) - 1;
@@ -296,6 +298,8 @@ const int notes[][2] = {
 {  0,	0}};
 
 int main(void) {
+    //this is the main function that can play a song represented
+    // by a 2D array with note frequencies (Hz) and durations (ms)
     configureFlash(); // config flash
     configureClock(); // configure clock, timers and GPIO
     
@@ -311,6 +315,7 @@ int main(void) {
     pinMode(AUDIO_PIN, GPIO_ALT);
     uint16_t i = 0;
     
+    //iterate through the array and play the song
     while((notes[i][1] != 0)){
         int freq = notes[i][0];
         int dur = notes[i][1];

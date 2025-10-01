@@ -1,3 +1,11 @@
+/*
+AUTHOER : George Davis
+Date    : 9/25/2025
+File    : STM32L432KC_TIM16.h
+Purpose : header file for TIM16
+*/
+
+
 // STM32L432KC_TIM16.h
 // Header for TIM16 functions
 

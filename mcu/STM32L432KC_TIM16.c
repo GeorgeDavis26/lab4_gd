@@ -1,16 +1,13 @@
-
 /*
 AUTHOER : George Davis
 Date    : 9/25/2025
-File    : STM32L432KW_TIM.c
-Purpose : main C file for E155 lab 4
-          Plays Fur Elise on a speaker using the STM32L4KC timer peripherals
-
+File    : STM32L432KC_TIM16.h
+Purpose :  Source code for TIM16 functions
+           this file configures the timer to PWM mode
 */
+
 // STM32L432KC_TIM16.c
-// Source code for TIM16 functions
-// TIM16 handles the frequency of the
-// the note played, found in main.c
+
 
 #include "STM32L432KC_TIM16.h"
 

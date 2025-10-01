@@ -22,11 +22,11 @@ Purpose : main C file for E155 lab 4
 
 
 // The PLL is configured as the sysclk and input to TIM15/16
-//lab4_starter constaints a const int of pitches and durations
+//lab4_starter constains a const int of pitches and durations
 
-//Create a PWM at GPIO pin 3
-// Need two timers -- TIM15 in PWM mode driving the frequency
-//                 -- TIM16 in up counting mode driving the duration of the note
+// Create a PWM at GPIO pin PA6
+// Need two timers -- TIM16 in PWM mode driving the frequency
+//                 -- TIM6 in up counting mode driving the duration of the note
 
 // Define macros for constants
 #define AUDIO_PIN           6 //PIN A6
@@ -47,7 +47,6 @@ void duration(int dur_DUR){
     TIM6->EGR |= 1; //UG bit
     TIM6->SR &= ~(1 << 0); //clear UIF
 
-
     TIM6->CR1 |= (1 << 0); //enable counter CEN bit
 }
 
@@ -59,8 +58,6 @@ void frequency(int freq_FREQ) {
     TIM16->ARR = arr_FREQ;  // sets ARR (freqency)
     TIM16->CCR1 = arr_FREQ/2;
 
-//    TIM16->RCR = 2;
-//    TIM16->CNT |= 0;  // Set counter to 0 to begin the timer
     TIM16->EGR |= (1 << 0); //UG bit
     TIM6->SR &= ~(1 << 0); //clear UIF
     TIM16->CR1 |= (1 << 0); //enable counter CEN bit
@@ -297,7 +294,7 @@ const int notes[][2] = {
 {494,	125},
 {440,	500},
 {  0,	0}};
-/*
+
 int main(void) {
     configureFlash(); // config flash
     configureClock(); // configure clock, timers and GPIO
@@ -306,16 +303,15 @@ int main(void) {
     RCC->APB1ENR1 |= (1 << 4); // SET TIM6 clk to sysclk PLL = 80MhZ
     RCC->APB2ENR |= (1 << 17); // SET TIM16 clk to sysclk PLL = 80MhZ
 
-    GPIOA->AFRL |= (14 << 24); //GPIOA PA2 AFRL set to AF14
+    GPIOA->AFRL |= (14 << 24); //GPIOA Pa6 AFRL set to AF14
 
     configureTIM16(); // SET TIMER 16 PWM MODE AND PSC
     configureTIM6(); //SET TIM 6 TO 
 
     pinMode(AUDIO_PIN, GPIO_ALT);
-
     uint16_t i = 0;
     
-    while(notes[i][1] != 0){
+    while((notes[i][1] != 0)){
         int freq = notes[i][0];
         int dur = notes[i][1];
         frequency(freq);
@@ -323,9 +319,10 @@ int main(void) {
         while((TIM6->SR >> 0 & 1) != 1);
         i = i + 1;
     }
+    TIM16->CR1 &= ~(1 << 0); //DISABLE counter CEN bit
 }
-*/
 
+/*
 //DEBUGGING
 int main(void) {
     configureFlash(); // config flash

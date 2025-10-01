@@ -1,6 +1,8 @@
 // STM32L432KC_RCC.h
 // Header for RCC functions
 
+//SOURCED FROM PROF BRAKES EXAMPLE CODE FOR HMC E155
+
 #ifndef STM32L4_RCC_H
 #define STM32L4_RCC_H
 

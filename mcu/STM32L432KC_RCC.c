@@ -1,6 +1,8 @@
 // STM32L432KC_RCC.c
 // Source code for RCC functions
 
+//SOURCED FROM PROF BRAKES EXAMPLE CODE FOR HMC E155
+
 #include "STM32L432KC_RCC.h"
 
 void configurePLL() {

@@ -1,6 +1,8 @@
 // STM32L432KC_GPIO.c
 // Source code for GPIO functions
 
+//SOURCED FROM PROF BRAKES EXAMPLE CODE FOR HMC E155
+
 #include "STM32L432KC_GPIO.h"
 
 void pinMode(int pin, int function) {

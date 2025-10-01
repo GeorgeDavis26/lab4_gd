@@ -1,3 +1,12 @@
+
+/*
+AUTHOER : George Davis
+Date    : 9/25/2025
+File    : STM32L432KW_TIM.c
+Purpose : main C file for E155 lab 4
+          Plays Fur Elise on a speaker using the STM32L4KC timer peripherals
+
+*/
 // STM32L432KC_TIM16.c
 // Source code for TIM16 functions
 // TIM16 handles the frequency of the
@@ -43,18 +52,12 @@ TIM16_CCRx register.
     TIM16->BDTR |= (1 << 15); //MOE set to 1
 
     TIM16->CCR1 = (0xFFFF)/2; //set pwn to 50 percent
-/*
-
 
     //enable OC1 output
     TIM16->CCER &= ~(1 << 1); //CC1P CLEARED
 
     TIM16->CCER |= (1 << 0); //CC1E enabled
 
-
-    //OC1 bit in CR is the output PWM!
-    TIM16->CR1 &= ~(1 << 1); //CLEAR UDIS just in case it blocks UG
-*/
 //    TIM16->CNT = 0; // set counter low v
     TIM16->EGR |= (1 << 0); //UG bit
     TIM16->CR1 |= (1 << 0); //CEN bit
